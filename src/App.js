@@ -4,6 +4,8 @@ import Post from "./Post";
 
 function App() {
 	const [posts, setPosts] = useState([
+		// Here below we insert the posts data as properties and values
+
 		{
 			username: "Shinichi",
 			caption: "Shiki Rhougi is fine demon",
@@ -68,6 +70,9 @@ function App() {
 					imageUrl={post.imageUrl}
 				/>
 			))}
+			{/* This loops through each post in the UseState, and its posts each post (properties and values) incrementally.
+      Everything we get a post, we are going to render out a post that contains the username, caption, and image.
+      */}
 		</div>
 	);
 }

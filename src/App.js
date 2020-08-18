@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
+import { db } from "./firebase";
 
 function App() {
-	const [posts, setPosts] = useState([
-		// Here below we insert the posts data as properties and values
+	const [posts, setPosts] = useState([]);
 
-		{
-			username: "Shinichi",
-			caption: "Shiki Rhougi is fine demon",
-			imageUrl:
-				"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/96194524-6c05-4a18-96f2-da8361fde9ca/d6pal91-c0902af1-cbdf-4f14-bcb4-76a012c86948.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvOTYxOTQ1MjQtNmMwNS00YTE4LTk2ZjItZGE4MzYxZmRlOWNhXC9kNnBhbDkxLWMwOTAyYWYxLWNiZGYtNGYxNC1iY2I0LTc2YTAxMmM4Njk0OC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.XJBAjJ8UFggXlEQrLgikRikEtep-HtSoACHC_YprwAs"
-		},
-		{
-			username: "Meow",
-			caption: "Wanna drink together",
-			imageUrl:
-				"https://cdna.artstation.com/p/assets/images/images/026/835/828/large/mineo-2020-05-14-tifa.jpg?1589864340"
-		},
-		{
-			username: "Assata",
-			caption: "Sando is queen",
-			imageUrl:
-				"https://cdnb.artstation.com/p/assets/images/images/029/426/453/large/vicki-saidge42-leversedge-leila-signature-1598.jpg?1597507982"
-		}
-	]);
+	// const [posts, setPosts] = useState([
+	// 	// Here below we insert the posts data as properties and values
+
+	// 	{
+	// 		username: "Shinichi",
+	// 		caption: "Shiki Rhougi is fine demon",
+	// 		imageUrl:
+	// 			"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/96194524-6c05-4a18-96f2-da8361fde9ca/d6pal91-c0902af1-cbdf-4f14-bcb4-76a012c86948.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvOTYxOTQ1MjQtNmMwNS00YTE4LTk2ZjItZGE4MzYxZmRlOWNhXC9kNnBhbDkxLWMwOTAyYWYxLWNiZGYtNGYxNC1iY2I0LTc2YTAxMmM4Njk0OC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.XJBAjJ8UFggXlEQrLgikRikEtep-HtSoACHC_YprwAs"
+	// 	},
+	// 	{
+	// 		username: "Meow",
+	// 		caption: "Wanna drink together",
+	// 		imageUrl:
+	// 			"https://cdna.artstation.com/p/assets/images/images/026/835/828/large/mineo-2020-05-14-tifa.jpg?1589864340"
+	// 	},
+	// 	{
+	// 		username: "Assata",
+	// 		caption: "Sando is queen",
+	// 		imageUrl:
+	// 			"https://cdnb.artstation.com/p/assets/images/images/029/426/453/large/vicki-saidge42-leversedge-leila-signature-1598.jpg?1597507982"
+	// 	}
+	// ]);
 
 	// Instead of hard coding posts, we want these to come from somewhere else.
 	// State will help us do this. State is a short term memory inside react.
@@ -51,6 +54,24 @@ function App() {
 	// This is an example of a hook.
 	// A hook is a small piece of code we can run.
 	// Their really powerful and functional and they allow us to use things such as state.
+
+	useEffect(
+		() => {
+			// this is where the code runs
+			db.collection("posts").onSnapshot((snapshot) => {
+				// Get the posts inside firebase
+				// Use onsnapshot
+				// Onsnapshot is a really powerful listener
+				// every single time the data base changes in that collection,
+				// every single time a document gets added, modified, changed inside a post,
+				// a camera is going to take a snapshot of exactly what that data collection looks like
+				setPosts(snapshot.docs.map((doc) => doc.data()));
+			});
+		},
+		// the below line means: whenever the page refreshs, and the conditional is satisfied,
+		// run this code once, and don't run it again.
+		[]
+	);
 
 	// UseEffect runs a piece of code based on a specific condition
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
 
@@ -51,6 +51,8 @@ function App() {
 	// This is an example of a hook.
 	// A hook is a small piece of code we can run.
 	// Their really powerful and functional and they allow us to use things such as state.
+
+	// UseEffect runs a piece of code based on a specific condition
 
 	return (
 		<div className="app">

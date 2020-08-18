@@ -12,7 +12,10 @@ const firebaseApp = firebase.initializeApp({
 });
 
 const db = firebaseApp.firestore();
+// to access the database - for storing data
 const auth = firebase.auth();
+// to access the authentication - for logging in and out
 const storage = firebase.storage();
+// to access the storage - for uploading content
 
 export { db, auth, storage };

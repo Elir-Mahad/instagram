@@ -64,15 +64,14 @@ function App() {
 			<h1>On the gram</h1>
 
 			{posts.map((post) => (
+				// loop through each post in the UseState
 				<Post
+					// posts each post (properties and values) incrementally
 					username={post.username}
 					caption={post.caption}
 					imageUrl={post.imageUrl}
 				/>
 			))}
-			{/* This loops through each post in the UseState, and its posts each post (properties and values) incrementally.
-      Everything we get a post, we are going to render out a post that contains the username, caption, and image.
-      */}
 		</div>
 	);
 }

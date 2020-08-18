@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
 import { db } from "./firebase";
+// import firebase from "./firebase"; OTHER METHOD
 
 function App() {
+	// const db = firebase.database(); OTHER METHOD
+
 	const [posts, setPosts] = useState([]);
 
 	// const [posts, setPosts] = useState([
@@ -70,6 +73,7 @@ function App() {
 		},
 		// the below line means: whenever the page refreshs, and the conditional is satisfied,
 		// run this code once, and don't run it again.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 

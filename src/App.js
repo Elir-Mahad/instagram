@@ -7,7 +7,7 @@ import { db } from "./firebase";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import { Button } from "@material-ui/core";
+import { Button, Input } from "@material-ui/core";
 
 // Beginning of material ui styles; this is copued and pasted from https://material-ui.com/components/modal/#modal
 
@@ -51,6 +51,9 @@ function App() {
 	// this is for managing the modal
 	// a modal is a popup that appears on click
 	// for this app, when the modal popup occurs it will be the box where the user types his username and password
+	const [username, setUsername] = useState([]);
+	const [email, setEmail] = useState([]);
+	const [password, setPassword] = useState([]);
 
 	useEffect(
 		// UseEffect runs a piece of code based on a specific condition
@@ -80,6 +83,8 @@ function App() {
 		[]
 	);
 
+	const signUp = (event) => {};
+
 	return (
 		<div className="app">
 			<Modal open={open} onClose={() => setOpen(false)}>
@@ -89,7 +94,34 @@ function App() {
 					The logic operating inside of the 'onClose' function is handled by material U.I.
 				*/}
 				<div style={modalStyle} className={classes.paper}>
-					<h2>I am a modal</h2>
+					<center>
+						{/* the center tag will ensure that everything is centered */}
+						{/* this is the content that appears inside the modal */}
+						<img
+							className="app_headerImage"
+							src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+							alt=""
+						/>
+						<Input
+							type="text"
+							placeholder="username"
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+						/>
+						<Input
+							type="text"
+							placeholder="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+						<Input
+							type="text"
+							placeholder="password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						/>
+						<Button onClick={signUp}>Sign up</Button>
+					</center>
 				</div>
 			</Modal>
 
@@ -100,7 +132,10 @@ function App() {
 					alt=""
 				/>
 			</div>
+
 			<Button onClick={() => setOpen(true)}> Sign up </Button>
+			{/* This is the modal button  */}
+
 			<h1>On the gram</h1>
 
 			{posts.map(({ id, post }) => (

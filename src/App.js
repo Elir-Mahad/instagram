@@ -54,6 +54,9 @@ function App() {
 	const [username, setUsername] = useState([]);
 	const [email, setEmail] = useState([]);
 	const [password, setPassword] = useState([]);
+	// these are the different inputs parts of the form (which is in the modal)
+	// the input field is imported vial material ui
+	// this states data inside the username, email, and password variable will be mainuplated via usestate
 
 	useEffect(
 		// UseEffect runs a piece of code based on a specific condition
@@ -94,34 +97,36 @@ function App() {
 					The logic operating inside of the 'onClose' function is handled by material U.I.
 				*/}
 				<div style={modalStyle} className={classes.paper}>
-					<center>
-						{/* the center tag will ensure that everything is centered */}
-						{/* this is the content that appears inside the modal */}
-						<img
-							className="app_headerImage"
-							src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-							alt=""
-						/>
-						<Input
-							type="text"
-							placeholder="username"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-						<Input
-							type="text"
-							placeholder="email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-						<Input
-							type="text"
-							placeholder="password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-						<Button onClick={signUp}>Sign up</Button>
-					</center>
+					<form>
+						<center className="app_signup">
+							{/* the center tag will ensure that everything is centered */}
+							{/* this is the content that appears inside the modal */}
+							<img
+								className="app_headerImage"
+								src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+								alt=""
+							/>
+							<Input
+								type="text"
+								placeholder="username"
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+							/>
+							<Input
+								type="text"
+								placeholder="email"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							<Input
+								type="text"
+								placeholder="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							<Button onClick={signUp}>Sign up</Button>
+						</center>
+					</form>
 				</div>
 			</Modal>
 

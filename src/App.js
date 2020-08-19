@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
 import { db } from "./firebase";
+// WE ARE USING REAL-TIME DATABASE
 
 function App() {
 	const [posts, setPosts] = useState([]);
@@ -20,9 +21,15 @@ function App() {
 				// every single time the data base changes in that collection,
 				// every single time a document gets added, modified, changed inside a post,
 				// a camera is going to take a snapshot of exactly what that data collection looks like
-				setPosts(snapshot.docs.map((doc) => doc.data()));
-				// from that snapshot, get all documents, map through every single document((snapshot.docs.map((doc))
-				// get the data (doc.data) --> data includes each docs properties and values (caption, username, image, etc )
+				setPosts(
+					snapshot.docs.map((doc) => ({
+						// from that snapshot, get all documents, map through every single document((snapshot.docs.map((doc))
+						id: doc.id,
+						// get the documents id  (in firebase database, the id is the number under the add document tab)
+						post: doc.data()
+						// get the document data (doc.data) --> data includes each docs properties and values (caption, username, image, etc )
+					}))
+				);
 			});
 		},
 		// the below line means: whenever the page refreshs, and the conditional is satisfied,
@@ -42,10 +49,11 @@ function App() {
 			</div>
 			<h1>On the gram</h1>
 
-			{posts.map((post) => (
-				// loop through each post in the UseState
+			{posts.map(({ id, post }) => (
+				// map through posts, grab each document id, and document post
 				<Post
-					// posts each post (properties and values) incrementally
+					// posts each documents id and post-data (properties and values) incrementally
+					key={id}
 					username={post.username}
 					caption={post.caption}
 					imageUrl={post.imageUrl}

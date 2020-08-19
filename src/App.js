@@ -3,12 +3,14 @@ import "./App.css";
 import Post from "./Post";
 import { db } from "./firebase";
 // WE ARE USING REAL-TIME DATABASE
+import Modal from "@material-ui/core/Modal";
 
 function App() {
 	const [posts, setPosts] = useState([]);
 	// When you are using the firebase data base to import all the data,
 	// we don't have to insert the data in the use useState (see commits from aug 19, on info on how to use useState).
 	// Instead you just need to have the single line: const [posts, setPosts] = useState([]);
+	const [open, setOpen] = useState(false);
 
 	useEffect(
 		// UseEffect runs a piece of code based on a specific condition
@@ -40,6 +42,12 @@ function App() {
 
 	return (
 		<div className="app">
+			<Modal open={open} onClose={handleClose}>
+				<div style={modalStyle} className={classes.paper}>
+					<h2>I am a modal</h2>
+				</div>
+			</Modal>
+
 			<div className="app_header">
 				<img
 					className="app_headerImage"

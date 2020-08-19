@@ -5,7 +5,9 @@ import { db } from "./firebase";
 
 // WE ARE USING REAL-TIME DATABASE
 
+import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import { Button } from "@material-ui/core";
 
 // Beginning of material ui styles; this is copued and pasted from https://material-ui.com/components/modal/#modal
 
@@ -38,6 +40,8 @@ function App() {
 	// In the material ui styles,
 	// the makestyles Hook (which has sthe styles) is stored in the useStyles variable.
 	// Here, the useStyles variable is stored in the variable 'classses'
+
+	const [modalStyle] = useState(getModalStyle);
 
 	const [posts, setPosts] = useState([]);
 	// When you are using the firebase data base to import all the data,
@@ -96,6 +100,7 @@ function App() {
 					alt=""
 				/>
 			</div>
+			<Button />
 			<h1>On the gram</h1>
 
 			{posts.map(({ id, post }) => (

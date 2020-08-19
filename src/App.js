@@ -2,15 +2,51 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
 import { db } from "./firebase";
+
 // WE ARE USING REAL-TIME DATABASE
+
 import Modal from "@material-ui/core/Modal";
 
+// Beginning of material ui styles; this is copued and pasted from https://material-ui.com/components/modal/#modal
+
+function getModalStyle() {
+	const top = 50;
+	const left = 50;
+
+	return {
+		top: `${top}%`,
+		left: `${left}%`,
+		transform: `translate(-${top}%, -${left}%)`
+	};
+}
+
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		position: "absolute",
+		width: 400,
+		backgroundColor: theme.palette.background.paper,
+		border: "2px solid #000",
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing(2, 4, 3)
+	}
+}));
+
+// end of material ui styles
+
 function App() {
+	const classes = useStyles();
+	// In the material ui styles,
+	// the makestyles Hook (which has sthe styles) is stored in the useStyles variable.
+	// Here, the useStyles variable is stored in the variable 'classses'
+
 	const [posts, setPosts] = useState([]);
 	// When you are using the firebase data base to import all the data,
 	// we don't have to insert the data in the use useState (see commits from aug 19, on info on how to use useState).
 	// Instead you just need to have the single line: const [posts, setPosts] = useState([]);
 	const [open, setOpen] = useState(false);
+	// this is for managing the modal
+	// a modal is a popup that appears on click
+	// for this app, when the modal popup occurs it will be the box where the user types his username and password
 
 	useEffect(
 		// UseEffect runs a piece of code based on a specific condition
@@ -42,7 +78,12 @@ function App() {
 
 	return (
 		<div className="app">
-			<Modal open={open} onClose={handleClose}>
+			<Modal open={open} onClose={() => setOpen(false)}>
+				{/* OnClose is listening for any clicks outside of the modal.
+					Every time that you click outside of the modal 
+					the state of the modal will be set to false (i.e, the modal will close).
+					The logic operating inside of the 'onClose' function is handled by material U.I.
+				*/}
 				<div style={modalStyle} className={classes.paper}>
 					<h2>I am a modal</h2>
 				</div>

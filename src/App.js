@@ -100,7 +100,7 @@ function App() {
 					alt=""
 				/>
 			</div>
-			<Button />
+			<Button onClick={() => setOpen(true)}> Sign up </Button>
 			<h1>On the gram</h1>
 
 			{posts.map(({ id, post }) => (

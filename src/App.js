@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
 import { db } from "./firebase";
+import { auth } from "firebase";
 
 // WE ARE USING REAL-TIME DATABASE
 
@@ -86,7 +87,14 @@ function App() {
 		[]
 	);
 
-	const signUp = (event) => {};
+	const signUp = (event) => {
+		event.preventDefault();
+
+		auth()
+			.createUserWithEmailAndPassword(email, password)
+
+			.catch((error) => error.message);
+	};
 
 	return (
 		<div className="app">
@@ -124,7 +132,9 @@ function App() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
-							<Button onClick={signUp}>Sign up</Button>
+							<Button type="submit" onClick={signUp}>
+								Sign up
+							</Button>
 						</center>
 					</form>
 				</div>

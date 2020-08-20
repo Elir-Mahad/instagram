@@ -4,13 +4,12 @@ import Post from "./Post";
 import { db } from "./firebase";
 import { auth } from "firebase";
 
-// WE ARE USING REAL-TIME DATABASE
-
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Button, Input } from "@material-ui/core";
 
-// Beginning of material ui styles; this is copued and pasted from https://material-ui.com/components/modal/#modal
+// Beginning of material ui styles;
+// this is copied and pasted from https://material-ui.com/components/modal/#modal
 
 function getModalStyle() {
 	const top = 50;
@@ -36,7 +35,12 @@ const useStyles = makeStyles((theme) => ({
 
 // end of material ui styles
 
+// -----------------------------------------------END OF IMPORTS
+
 function App() {
+	//
+	// -------------- ALL USESTATES BELOW
+
 	const classes = useStyles();
 	// In the material ui styles,
 	// the makestyles Hook (which has sthe styles) is stored in the useStyles variable.
@@ -48,40 +52,60 @@ function App() {
 	// When you are using the firebase data base to import all the data,
 	// we don't have to insert the data in the use useState (see commits from aug 19, on info on how to use useState).
 	// Instead you just need to have the single line: const [posts, setPosts] = useState([]);
+	// Here we declare that the constant posts contains an array (posts)
+	// And we declare that we will mainpulate this array (setPosts)
+	// By wrapping the array in a UseState()
+
 	const [open, setOpen] = useState(false);
 	// this is for managing the modal
 	// a modal is a popup that appears on click
 	// for this app, when the modal popup occurs it will be the box where the user types his username and password
+
 	const [username, setUsername] = useState([]);
-	const [email, setEmail] = useState([]);
-	const [password, setPassword] = useState([]);
-	// these are the different inputs parts of the form (which is in the modal)
+	// (username) The constant username contains an array
+	// (setUsername) And we declare that we will mainpulate this array
+	// By wrapping the array in a UseState()
+	// this is part of the inputs part of the form (which is in the modal)
 	// the input field is imported vial material ui
-	// this states data inside the username, email, and password variable will be mainuplated via usestate
+
+	const [email, setEmail] = useState([]);
+	// (email)  The constant email contains an array
+	// (setEmail) And we declare that we will mainpulate this array
+	// By wrapping the array in a UseState()
+	// this is part of the inputs part of the form (which is in the modal)
+	// the input field is imported vial material ui
+
+	const [password, setPassword] = useState([]);
+	// (password) The constant password contains an array
+	// (setPassword) And we declare that we will mainpulate this array
+	// By wrapping the array in a UseState()
+	// this is part of the inputs part of the form (which is in the modal)
+	// the input field is imported vial material ui
+
 	const [user, setUser] = useState(null);
+	// this will keep track of the user
+
+	// ----------FIRST USE EFFECT BELOW
 
 	useEffect(() => {
 		const unsubscribe = auth().onAuthStateChanged((authUser) => {
+			// this is going to listen, and it gives us something called an 'authuser'
+			// this will fire off every single time any authentication change happens
+			// (ex: logging in, loggin out, creating user, deleting user, etc)
 			if (authUser) {
-				// user has loggind in
-
+				// if the user has logged in
 				console.log(authUser);
-
+				// console.log that that user is logged in
 				setUser(authUser);
-
-				// if (authUser.displayName) {
-				// 	// dont update username
-				// } else {
-				// 	// if we just created someone
-
-				// 	return authUser.updateProfile({
-				// 		displayName: username
-				// 	});
-				// }
+				// capture that user inside of our state.
+				// This also ensures that user data survives refresh.
+				// Ex: if max is logged in and then he refreshed,
+				// react will be able to see that hes still logged in, because it uses cookie tracking
+				// and then it would set the state(as being logged in).
 			} else {
-				// user has logged out
-
+				// if the user has logged out
 				setUser(null);
+				// set the user to null
 			}
 		});
 
@@ -90,7 +114,15 @@ function App() {
 
 			unsubscribe();
 		};
+
+		// Unlike the next useEffect below
+		// we don't want torun this code only once when the app component loads, and don't run it again.
+		// In this situation, since we are repeteadly updating the user and username,
+		// we want this useEffect to be fired of everytime the user/username changes.
+		// Hence, we have to the include them as dependencies.
 	}, [user, username]);
+
+	// -----------SECOND USE EFFECT BELOW
 
 	useEffect(
 		// UseEffect runs a piece of code based on a specific condition
@@ -120,22 +152,33 @@ function App() {
 		[]
 	);
 
+	// -----------
+
 	const signUp = (event) => {
 		// this is the firebase authentication
 
 		event.preventDefault();
+		// this stops the form for refreshing/reloading
 
 		auth()
 			.createUserWithEmailAndPassword(email, password)
+			// this line gives you the ability to create a new user and password
 
 			.then((authUser) => {
+				// then if we just created a new user
+				// and in our state we have the username that we just typed in
+				// go to the user that you just logged in with
+				// update their profile and set the displayname
 				authUser.user.updateProfile({
 					displayName: username
 				});
 			})
 
 			.catch((error) => alert(error.message));
+		// if there are any errors, then make an alert
 	};
+
+	// --------------
 
 	return (
 		<div className="app">

@@ -17,7 +17,7 @@ function ImageUpload({ username }) {
 	// (setProgress) And we declare that we will mainpulate this number
 	// By wrapping the string in a UseState()
 
-	const [caption, setCaption] = useState[""];
+	const [caption, setCaption] = useState("");
 	// (caption) The constant username contains a string
 	// (setCaption) And we declare that we will mainpulate this string
 	// By wrapping the string in a UseState()

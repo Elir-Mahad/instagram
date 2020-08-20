@@ -59,6 +59,31 @@ function ImageUpload() {
 			},
 			() => {
 				// complete function
+				storage()
+					.ref("images")
+					// go to the ref images
+					.child(image.name)
+					// go to the image named child
+					.getDownloadURL()
+					// get me the download url
+					.then((url) => {
+						// then take this url
+						db()
+							// post the image inside of the database
+							.collection("posts")
+							.add({
+								timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+								// this is useful for storing all code based on the correct timing
+								caption: caption,
+								imageUrl: url,
+								// This is the downloaded url .then(url)
+								// Its important to pay attention to how we are getting this image
+								// [1] In the function handleUpload, we uploaded the image to the firebase storage
+								// [2] We used --> .getDownloadURL() ---> to get a download link
+								// [3] We are now using the download link, to post the image
+								username: username
+							});
+					});
 			}
 		);
 	};

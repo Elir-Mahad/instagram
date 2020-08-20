@@ -18,4 +18,4 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 // to access the storage - for uploading content
 
-export { db, auth, storage };
+export { firebase, db, auth, storage };

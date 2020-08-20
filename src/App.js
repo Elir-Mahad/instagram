@@ -221,7 +221,14 @@ function App() {
 
 	return (
 		<div className="app">
-			<ImageUpload />
+			{user?.displayName ? (
+				<ImageUpload username={user.displayName} />
+			) : (
+				<h3> Login to upload</h3>
+			)}
+
+			{/* <ImageUpload username={user.displayName} /> */}
+
 			<Modal open={openSignUp} onClose={() => setOpenSignUp(false)}>
 				{/* This is the Sign Up modal. It will popup when the signup button is clicked.
 						OnClose is listening for any clicks outside of the modal.

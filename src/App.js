@@ -58,27 +58,39 @@ function App() {
 	// these are the different inputs parts of the form (which is in the modal)
 	// the input field is imported vial material ui
 	// this states data inside the username, email, and password variable will be mainuplated via usestate
-	const [user, SetUser] = useState(null);
+	const [user, setUser] = useState(null);
 
 	useEffect(() => {
-		auth().onAuthStateChanged((authUser) => {
+		const unsubscribe = auth().onAuthStateChanged((authUser) => {
 			if (authUser) {
 				// user has loggind in
+
 				console.log(authUser);
+
 				setUser(authUser);
-				if (authUser.displayName) {
-					// dont update username
-				} else {
-					return authUser.updateProfile({
-						displayName: username
-					});
-				}
+
+				// if (authUser.displayName) {
+				// 	// dont update username
+				// } else {
+				// 	// if we just created someone
+
+				// 	return authUser.updateProfile({
+				// 		displayName: username
+				// 	});
+				// }
 			} else {
 				// user has logged out
+
 				setUser(null);
 			}
 		});
-	}, []);
+
+		return () => {
+			// perform some cleanup actions
+
+			unsubscribe();
+		};
+	}, [user, username]);
 
 	useEffect(
 		// UseEffect runs a piece of code based on a specific condition
@@ -115,6 +127,12 @@ function App() {
 
 		auth()
 			.createUserWithEmailAndPassword(email, password)
+
+			.then((authUser) => {
+				authUser.user.updateProfile({
+					displayName: username
+				});
+			})
 
 			.catch((error) => alert(error.message));
 	};

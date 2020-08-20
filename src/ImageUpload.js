@@ -36,18 +36,31 @@ function ImageUpload() {
 		// creating a new photo. Image name is the file name that we selected.
 		// putting the 'image' that you grabbed into 'images'
 
-		uploadTask.on("state_changed", (snapshot) => {
-			// on state changed give me a snapshot
-			// And as it changes and gets updated keep on giving me snapshots
-			const progress = Math.round(
-				// The constant progress stores a math equation
-				// that could transform these continuous snapshots into a progress indicator
-				(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-				// This equation is going to use the range of numbers from 0 and 100,
-				// and it will output a specific number (between 0 and 100)
-				// and this number will indicate progress
-			);
-		});
+		uploadTask.on(
+			"state_changed",
+			(snapshot) => {
+				// on state changed give me a snapshot
+				// And as it changes and gets updated keep on giving me snapshots
+				const progress = Math.round(
+					// The constant progress stores a math equation
+					// that could transform these continuous snapshots into a progress indicator
+					(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+					// This equation is going to use the range of numbers from 0 and 100,
+					// and it will output a specific number (between 0 and 100)
+					// and this number will indicate progress
+				);
+				setProgress(progress);
+				// display the progress number from 0 to 100
+			},
+			(error) => {
+				// error function
+				// console.log(error);
+				alert(error.message);
+			},
+			() => {
+				// complete function
+			}
+		);
 	};
 
 	return (

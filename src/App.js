@@ -7,6 +7,7 @@ import { auth } from "firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Button, Input } from "@material-ui/core";
+import ImageUpload from "./ImageUpload";
 
 // Beginning of material ui styles;
 // this is copied and pasted from https://material-ui.com/components/modal/#modal
@@ -220,6 +221,7 @@ function App() {
 
 	return (
 		<div className="app">
+			<ImageUpload />
 			<Modal open={openSignUp} onClose={() => setOpenSignUp(false)}>
 				{/* This is the Sign Up modal. It will popup when the signup button is clicked.
 						OnClose is listening for any clicks outside of the modal.

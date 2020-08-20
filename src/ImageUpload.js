@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
 // import "./ImageUpload.css";
 
 function ImageUpload() {
@@ -13,6 +14,9 @@ function ImageUpload() {
 			// set the image in state to that
 		}
 	};
+
+	const handleUpload = () => {};
+
 	return (
 		<div>
 			<h1>ABC</h1>
@@ -26,10 +30,16 @@ function ImageUpload() {
 				onChange={(event) => setCaption(event.target.value)}
 				value={caption}
 			/>
+			{/*  */}
 
 			<input type="file" onChange={handleChange} />
+			{/* Type="file" for the input, gives you the ability to select files on click, from your computer, via the browser. 
+                The function 'handleChange' will declare what happens when you click a file*/}
 
-			<button onClick={handleUpload}>Upload</button>
+			<Button className="imageupload_button" onClick={handleUpload}>
+				Upload
+			</Button>
+			{/* This is a material ui button. */}
 		</div>
 	);
 }

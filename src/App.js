@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 // end of material ui styles
 
-// -----------------------------------------------END OF IMPORTS
+//! -----------------------------------------------END OF IMPORTS
 
 function App() {
 	//
@@ -45,18 +45,7 @@ function App() {
 	// the makestyles Hook (which has the styles) is stored in the useStyles variable.
 	// Here, the useStyles variable is stored in the variable 'classses'
 
-	// -------------- ALL USESTATES BELOW
-
-	const [modalStyle] = useState(getModalStyle);
-	// This is for the modal from material ui
-
-	const [openSignUp, setOpenSignUp] = useState(false);
-	// this is for managing the modal
-	// a modal is a popup that appears on click
-	// for this app, when the modal popup occurs
-	// it will be the box where the user types his username and password
-
-	const [openSignIn, setOpenSignIn] = useState(false);
+	//! -------------- ALL USESTATES BELOW
 
 	const [posts, setPosts] = useState([]);
 	// When you are using the firebase data base to import all the data,
@@ -65,6 +54,21 @@ function App() {
 	// (posts)  The constant posts contains an array
 	// (setPosts) And we declare that we will mainpulate this array
 	// By wrapping the array in a UseState()
+
+	const [modalStyle] = useState(getModalStyle);
+	// This is to get the modal styles from material ui
+
+	const [openSignUp, setOpenSignUp] = useState(false);
+	// This is for signing up a new user via the modal.
+	// The modal is a popup that appears when the Sign up button is clicked.
+	// When the modal popup occurs, it will contain a form,
+	// where the user can sign up with his username, email, and password.
+
+	const [openSignIn, setOpenSignIn] = useState(false);
+	// This is for signing in an old user via the modal.
+	// The modal is a popup that appears when the Sign in button is clicked.
+	// When the modal popup occurs, it will contain a form,
+	// where the user can sign in with his username and password
 
 	const [username, setUsername] = useState("");
 	// (username) The constant username contains a string
@@ -90,7 +94,7 @@ function App() {
 	const [user, setUser] = useState(null);
 	// this will keep track of the user
 
-	// ----------FIRST USE EFFECT BELOW - UseEffect runs a piece of code based on a specific condition
+	//! ----------FIRST USE EFFECT BELOW - UseEffect runs a piece of code based on a specific condition
 
 	useEffect(() => {
 		const unsubscribe = auth().onAuthStateChanged((authUser) => {
@@ -127,7 +131,7 @@ function App() {
 		// Hence, we have to the include them as dependencies.
 	}, [user, username]);
 
-	// -----------SECOND USE EFFECT BELOW
+	//! -----------SECOND USE EFFECT BELOW - UseEffect runs a piece of code based on a specific condition
 
 	useEffect(
 		() => {
@@ -156,7 +160,7 @@ function App() {
 		[]
 	);
 
-	// -----------
+	//! -----------BELOW IS THE SIGN UP FUNCTION - THIS IS USED TO SIGN NEW USERS UP
 
 	const signUp = (event) => {
 		// The variable sign up stores the code that will signup new users, via the firebase authentication
@@ -181,6 +185,8 @@ function App() {
 			.catch((error) => alert(error.message));
 		// if there are any errors, then make an alert
 	};
+
+	//! -----------BELOW IS THE SIGN IN FUNCTION - THIS IS USED TO SIGN REGISTERED USERS IN
 
 	const signIn = (event) => {
 		// The variable signIn stores the code that will sign in registered users, via the firebase authentication
@@ -215,10 +221,11 @@ function App() {
 	return (
 		<div className="app">
 			<Modal open={openSignUp} onClose={() => setOpenSignUp(false)}>
-				{/* OnClose is listening for any clicks outside of the modal.
-					Every time that you click outside of the modal 
-					the state of the modal will be set to false (i.e, the modal will close).
-					The logic operating inside of the 'onClose' function is handled by material U.I.
+				{/* This is the Sign Up modal. It will popup when the signup button is clicked.
+						OnClose is listening for any clicks outside of the modal.
+						Every time that you click outside of the modal 
+						the state of the modal will be set to false (i.e, the modal will close).
+						The logic operating inside of the 'onClose' function is handled by material U.I.
 				*/}
 				<div style={modalStyle} className={classes.paper}>
 					<form>
@@ -257,10 +264,11 @@ function App() {
 			</Modal>
 
 			<Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
-				{/* OnClose is listening for any clicks outside of the modal.
-					Every time that you click outside of the modal 
-					the state of the modal will be set to false (i.e, the modal will close).
-					The logic operating inside of the 'onClose' function is handled by material U.I.
+				{/* This is the Sign in modal. It will popup up when the sign in buttton is clicked.
+						OnClose is listening for any clicks outside of the modal.
+						Every time that you click outside of the modal 
+						the state of the modal will be set to false (i.e, the modal will close).
+						The logic operating inside of the 'onClose' function is handled by material U.I.
 				*/}
 				<div style={modalStyle} className={classes.paper}>
 					<form>
@@ -292,6 +300,9 @@ function App() {
 				</div>
 			</Modal>
 
+			{/* THE ABOVE MODALS ARE NOT VISIBLE - THEY ONLY APPEAR WHEN THE BUTTONS ASSOCIATED WITH THEM ARE CLICKED */}
+			{/* The ACTUAL CONTENT ON THE PAGE BEGINS HERE */}
+
 			<div className="app_header">
 				<img
 					className="app_headerImage"
@@ -305,11 +316,17 @@ function App() {
 
 				<Button onClick={() => auth().signOut()}> Sign out </Button> // display a Sign out button - this button will use the firebase 'auth().signOut' to sign out the user.
 			) : (
-				// OR if they user is not logged in  then
+				// OR if the user is not logged in  then
 				<div className="app_loginContainer">
 					<Button onClick={() => setOpenSignIn(true)}> Sign in </Button>
+					{/* Display a sign in button */}
+					{/* When its clicked the OpenSignIn modal will popup. */}
+					{/* This modal will use the signIn function to sign a user in */}
 
 					<Button onClick={() => setOpenSignUp(true)}> Sign up </Button>
+					{/* Display a sign up button  */}
+					{/* When its clicked the OpenSignUp modal will popup. */}
+					{/* This will use the signUp function to sign a user up  */}
 				</div>
 			)}
 			{/*  */}

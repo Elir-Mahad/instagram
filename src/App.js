@@ -39,53 +39,56 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
 	//
-	// -------------- ALL USESTATES BELOW
 
 	const classes = useStyles();
 	// In the material ui styles,
-	// the makestyles Hook (which has sthe styles) is stored in the useStyles variable.
+	// the makestyles Hook (which has the styles) is stored in the useStyles variable.
 	// Here, the useStyles variable is stored in the variable 'classses'
 
+	// -------------- ALL USESTATES BELOW
+
 	const [modalStyle] = useState(getModalStyle);
+	// This is for the modal from material ui
+
+	const [open, setOpen] = useState(false);
+	// this is for managing the modal
+	// a modal is a popup that appears on click
+	// for this app, when the modal popup occurs
+	// it will be the box where the user types his username and password
 
 	const [posts, setPosts] = useState([]);
 	// When you are using the firebase data base to import all the data,
 	// we don't have to insert the data in the use useState (see commits from aug 19, on info on how to use useState).
 	// Instead you just need to have the single line: const [posts, setPosts] = useState([]);
-	// Here we declare that the constant posts contains an array (posts)
-	// And we declare that we will mainpulate this array (setPosts)
+	// (posts)  The constant posts contains an array
+	// (setPosts) And we declare that we will mainpulate this array
 	// By wrapping the array in a UseState()
-
-	const [open, setOpen] = useState(false);
-	// this is for managing the modal
-	// a modal is a popup that appears on click
-	// for this app, when the modal popup occurs it will be the box where the user types his username and password
 
 	const [username, setUsername] = useState([]);
 	// (username) The constant username contains an array
 	// (setUsername) And we declare that we will mainpulate this array
 	// By wrapping the array in a UseState()
-	// this is part of the inputs part of the form (which is in the modal)
+	// this is an input-field in the form (which is in the modal)
 	// the input field is imported vial material ui
 
 	const [email, setEmail] = useState([]);
 	// (email)  The constant email contains an array
 	// (setEmail) And we declare that we will mainpulate this array
 	// By wrapping the array in a UseState()
-	// this is part of the inputs part of the form (which is in the modal)
+	// this is an input-field in the form (which is in the modal)
 	// the input field is imported vial material ui
 
 	const [password, setPassword] = useState([]);
 	// (password) The constant password contains an array
 	// (setPassword) And we declare that we will mainpulate this array
 	// By wrapping the array in a UseState()
-	// this is part of the inputs part of the form (which is in the modal)
+	// this is an input-field in the form (which is in the modal)
 	// the input field is imported vial material ui
 
 	const [user, setUser] = useState(null);
 	// this will keep track of the user
 
-	// ----------FIRST USE EFFECT BELOW
+	// ----------FIRST USE EFFECT BELOW - UseEffect runs a piece of code based on a specific condition
 
 	useEffect(() => {
 		const unsubscribe = auth().onAuthStateChanged((authUser) => {
@@ -116,7 +119,7 @@ function App() {
 		};
 
 		// Unlike the next useEffect below
-		// we don't want torun this code only once when the app component loads, and don't run it again.
+		// we don't want to run this code only once when the app component loads, and don't run it again.
 		// In this situation, since we are repeteadly updating the user and username,
 		// we want this useEffect to be fired of everytime the user/username changes.
 		// Hence, we have to the include them as dependencies.
@@ -125,7 +128,6 @@ function App() {
 	// -----------SECOND USE EFFECT BELOW
 
 	useEffect(
-		// UseEffect runs a piece of code based on a specific condition
 		() => {
 			// this is where the code runs
 			db.collection("posts").onSnapshot((snapshot) => {

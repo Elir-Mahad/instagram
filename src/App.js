@@ -58,6 +58,27 @@ function App() {
 	// these are the different inputs parts of the form (which is in the modal)
 	// the input field is imported vial material ui
 	// this states data inside the username, email, and password variable will be mainuplated via usestate
+	const [user, SetUser] = useState(null);
+
+	useEffect(() => {
+		auth().onAuthStateChanged((authUser) => {
+			if (authUser) {
+				// user has loggind in
+				console.log(authUser);
+				setUser(authUser);
+				if (authUser.displayName) {
+					// dont update username
+				} else {
+					return authUser.updateProfile({
+						displayName: username
+					});
+				}
+			} else {
+				// user has logged out
+				setUser(null);
+			}
+		});
+	}, []);
 
 	useEffect(
 		// UseEffect runs a piece of code based on a specific condition
@@ -88,12 +109,14 @@ function App() {
 	);
 
 	const signUp = (event) => {
+		// this is the firebase authentication
+
 		event.preventDefault();
 
 		auth()
 			.createUserWithEmailAndPassword(email, password)
 
-			.catch((error) => error.message);
+			.catch((error) => alert(error.message));
 	};
 
 	return (

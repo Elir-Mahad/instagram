@@ -1,5 +1,6 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
+import { storage, db } from "./firebase.js";
 // import "./ImageUpload.css";
 
 function ImageUpload() {
@@ -29,7 +30,25 @@ function ImageUpload() {
 		}
 	};
 
-	const handleUpload = () => {};
+	const handleUpload = () => {
+		const uploadTask = storage.ref(`images/${image.name}`).put(image);
+		// access the storage in firebase, get a reference to this photo
+		// creating a new photo. Image name is the file name that we selected.
+		// putting the 'image' that you grabbed into 'images'
+
+		uploadTask.on("state_changed", (snapshot) => {
+			// on state changed give me a snapshot
+			// And as it changes and gets updated keep on giving me snapshots
+			const progress = Math.round(
+				// The constant progress stores a math equation
+				// that could transform these continuous snapshots into a progress indicator
+				(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+				// This equation is going to use the range of numbers from 0 and 100,
+				// and it will output a specific number (between 0 and 100)
+				// and this number will indicate progress
+			);
+		});
+	};
 
 	return (
 		<div>

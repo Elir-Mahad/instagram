@@ -50,11 +50,13 @@ function App() {
 	const [modalStyle] = useState(getModalStyle);
 	// This is for the modal from material ui
 
-	const [open, setOpen] = useState(false);
+	const [openSignUp, setOpenSignUp] = useState(false);
 	// this is for managing the modal
 	// a modal is a popup that appears on click
 	// for this app, when the modal popup occurs
 	// it will be the box where the user types his username and password
+
+	const [openSignIn, setOpenSignIn] = useState(false);
 
 	const [posts, setPosts] = useState([]);
 	// When you are using the firebase data base to import all the data,
@@ -64,24 +66,24 @@ function App() {
 	// (setPosts) And we declare that we will mainpulate this array
 	// By wrapping the array in a UseState()
 
-	const [username, setUsername] = useState([]);
-	// (username) The constant username contains an array
-	// (setUsername) And we declare that we will mainpulate this array
-	// By wrapping the array in a UseState()
+	const [username, setUsername] = useState("");
+	// (username) The constant username contains a string
+	// (setUsername) And we declare that we will mainpulate this string
+	// By wrapping the string in a UseState()
 	// this is an input-field in the form (which is in the modal)
 	// the input field is imported vial material ui
 
-	const [email, setEmail] = useState([]);
-	// (email)  The constant email contains an array
-	// (setEmail) And we declare that we will mainpulate this array
-	// By wrapping the array in a UseState()
+	const [email, setEmail] = useState("");
+	// (email)  The constant email contains a string
+	// (setEmail) And we declare that we will mainpulate this string
+	// By wrapping the string in a UseState()
 	// this is an input-field in the form (which is in the modal)
 	// the input field is imported vial material ui
 
-	const [password, setPassword] = useState([]);
-	// (password) The constant password contains an array
-	// (setPassword) And we declare that we will mainpulate this array
-	// By wrapping the array in a UseState()
+	const [password, setPassword] = useState("");
+	// (password) The constant password contains a string
+	// (setPassword) And we declare that we will mainpulate this string
+	// By wrapping the string in a UseState()
 	// this is an input-field in the form (which is in the modal)
 	// the input field is imported vial material ui
 
@@ -157,7 +159,7 @@ function App() {
 	// -----------
 
 	const signUp = (event) => {
-		// this is the firebase authentication
+		// The variable sign up stores the code that will signup new users, via the firebase authentication
 
 		event.preventDefault();
 		// this stops the form for acting weird
@@ -180,11 +182,39 @@ function App() {
 		// if there are any errors, then make an alert
 	};
 
+	const signIn = (event) => {
+		// The variable signIn stores the code that will sign in registered users, via the firebase authentication
+
+		event.preventDefault();
+		// this stops the form for acting weird
+
+		auth()
+			.signInWithEmailAndPassword(email, password)
+			// this line gives you the ability to sign in a user, via their email and password
+
+			// .then((authUser) => {
+			// then if we just created a new user
+			// and in our state we have the username that we just typed in
+			// go to the user that you just logged in with
+			// update their profile and set the displayname
+			// 	authUser.user.updateProfile({
+			// 		displayName: username
+			// 	});
+			// })
+
+			.catch((error) => alert(error.message));
+		// if there are any errors, then make an alert
+
+		setOpenSignIn(false);
+		// after we sign in, we don't want the sign in modal to be open
+		// so setOpenSignIn(false); will close the modal once you sign in
+	};
+
 	// --------------
 
 	return (
 		<div className="app">
-			<Modal open={open} onClose={() => setOpen(false)}>
+			<Modal open={openSignUp} onClose={() => setOpenSignUp(false)}>
 				{/* OnClose is listening for any clicks outside of the modal.
 					Every time that you click outside of the modal 
 					the state of the modal will be set to false (i.e, the modal will close).
@@ -226,6 +256,42 @@ function App() {
 				</div>
 			</Modal>
 
+			<Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
+				{/* OnClose is listening for any clicks outside of the modal.
+					Every time that you click outside of the modal 
+					the state of the modal will be set to false (i.e, the modal will close).
+					The logic operating inside of the 'onClose' function is handled by material U.I.
+				*/}
+				<div style={modalStyle} className={classes.paper}>
+					<form>
+						<center className="app_signup">
+							{/* the center tag will ensure that everything is centered */}
+							{/* this is the content that appears inside the modal */}
+							<img
+								className="app_headerImage"
+								src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+								alt=""
+							/>
+							<Input
+								type="text"
+								placeholder="email"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							<Input
+								type="text"
+								placeholder="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							<Button type="submit" onClick={signIn}>
+								Sign In
+							</Button>
+						</center>
+					</form>
+				</div>
+			</Modal>
+
 			<div className="app_header">
 				<img
 					className="app_headerImage"
@@ -237,11 +303,14 @@ function App() {
 			{user ? (
 				// if the user is logged in then
 
-				<Button onClick={() => auth().signOut()}> Sign out </Button> // display a Sign out button
+				<Button onClick={() => auth().signOut()}> Sign out </Button> // display a Sign out button - this button will use the firebase 'auth().signOut' to sign out the user.
 			) : (
 				// OR if they user is not logged in  then
+				<div className="app_loginContainer">
+					<Button onClick={() => setOpenSignIn(true)}> Sign in </Button>
 
-				<Button onClick={() => setOpen(true)}> Sign up </Button> // display a sign up button
+					<Button onClick={() => setOpenSignUp(true)}> Sign up </Button>
+				</div>
 			)}
 			{/*  */}
 

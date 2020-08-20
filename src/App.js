@@ -149,7 +149,7 @@ function App() {
 			});
 		},
 		// the below line means: whenever the page refreshs, and the conditional is satisfied,
-		// run this code once when the app component loads, and don't run it again.
+		// run this code only once when the app component loads, and don't run it again.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
@@ -160,7 +160,7 @@ function App() {
 		// this is the firebase authentication
 
 		event.preventDefault();
-		// this stops the form for refreshing/reloading
+		// this stops the form for acting weird
 
 		auth()
 			.createUserWithEmailAndPassword(email, password)
@@ -234,7 +234,17 @@ function App() {
 				/>
 			</div>
 
-			<Button onClick={() => setOpen(true)}> Sign up </Button>
+			{user ? (
+				// if the user is logged in then
+
+				<Button onClick={() => auth().signOut()}> Sign out </Button> // display a Sign out button
+			) : (
+				// OR if they user is not logged in  then
+
+				<Button onClick={() => setOpen(true)}> Sign up </Button> // display a sign up button
+			)}
+			{/*  */}
+
 			{/* This is the modal button  */}
 
 			<h1>On the gram</h1>

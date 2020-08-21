@@ -22,6 +22,8 @@ function ImageUpload({ username }) {
 	// (setCaption) And we declare that we will mainpulate this string
 	// By wrapping the string in a UseState()
 
+	//! THIS IS THE FUNCTION FOR GETTING IMAGE AND CAPTION FROM THE USER PC
+
 	const handleChange = (e) => {
 		// handleChange is a function that fires off an event
 		if (e.target.files[0]) {
@@ -30,6 +32,8 @@ function ImageUpload({ username }) {
 			// set the image in state to that
 		}
 	};
+
+	//! THIS IS THE FUNCTION FOR UPLOADING IMAGE AND CAPTION TO THE FIREBASE AND THEN DISPLAYING THEM ON THE WEB PAGE
 
 	const handleUpload = () => {
 		const uploadTask = storage.ref(`images/${image.name}`).put(image);
@@ -93,8 +97,8 @@ function ImageUpload({ username }) {
 						setProgress(0);
 						setCaption("");
 						setImage(null);
-						// after your done, set everything back to how it started
-						// with no progress, no file name, no caption and no image path
+						// after your done uploading, set everything back to how it started
+						// with no progress, no caption, and no image path
 					});
 			}
 		);
@@ -102,11 +106,8 @@ function ImageUpload({ username }) {
 
 	return (
 		<div>
-			{/* caption input */}
-			{/* file picker */}
-			{/* post button */}
-
 			<progress value={progress} max="100" />
+			{/* this is the progress bar */}
 
 			<input
 				type="text"

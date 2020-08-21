@@ -60,12 +60,18 @@ function App() {
 	// This is to get the modal styles from material ui
 
 	const [openSignUp, setOpenSignUp] = useState(false);
+	// (openSignUp)  The constant openSignUp is not being rendered/used
+	// (setOpenSignUp) And we declare that we will mainpulate the values stored in this constant after its rendered
+	// By wrapping it in a UseState()
 	// This is for signing up a new user via the modal.
 	// The modal is a popup that appears when the Sign up button is clicked.
 	// When the modal popup occurs, it will contain a form,
 	// where the user can sign up with his username, email, and password.
 
 	const [openSignIn, setOpenSignIn] = useState(false);
+	// (openSignIn)  The constant openSignIn is not being rendered/used
+	// (setOpenSignIn) And we declare that we will mainpulate the values stored in this constant after its rendered
+	// By wrapping it in a UseState()
 	// This is for signing in an old user via the modal.
 	// The modal is a popup that appears when the Sign in button is clicked.
 	// When the modal popup occurs, it will contain a form,
@@ -175,9 +181,9 @@ function App() {
 
 			.then((authUser) => {
 				// then if we just created a new user
-				// and in our state we have the username that we just typed in
+				// and in our state we have the username that the user just typed in
 				// go to the user that you just logged in with
-				// update their profile and set the displayname
+				// update their profile and set the displayname as the username
 				authUser.user.updateProfile({
 					displayName: username
 				});
@@ -199,16 +205,6 @@ function App() {
 			.signInWithEmailAndPassword(email, password)
 			// this line gives you the ability to sign in a user, via their email and password
 
-			// .then((authUser) => {
-			// then if we just created a new user
-			// and in our state we have the username that we just typed in
-			// go to the user that you just logged in with
-			// update their profile and set the displayname
-			// 	authUser.user.updateProfile({
-			// 		displayName: username
-			// 	});
-			// })
-
 			.catch((error) => alert(error.message));
 		// if there are any errors, then make an alert
 
@@ -221,16 +217,16 @@ function App() {
 
 	return (
 		<div className="app">
-			{/* We only want to display the image upload component,
+			{/* In the App, there is a image upload component.
+			This allows the user to upload a new image and caption to the page.
+			We only want to display the image upload component,
 			if they user is logged in. If they user is not logged in,
-			we want to tell the user to either sign up or login*/}
+			we want to tell the user to either sign up or login.*/}
 
 			{user?.displayName ? (
 				// If the username is being displayed (i.e, user is logged in)
 				// Even if the User might be undefined (we have inserted the optional (?) to deal with a potentialy undefined user)
-
 				// The optional says: if this is not there, then don't freak out and break
-				// only apply this condition once this is there
 
 				<ImageUpload username={user.displayName} /> // then display the image upload component
 			) : (
@@ -262,18 +258,27 @@ function App() {
 								placeholder="username"
 								value={username}
 								onChange={(e) => setUsername(e.target.value)}
+								// onChange is a function that fires of an event
+								// (e.target.value) the event will target the value (i.e, grab the typed username)
+								// (setUsername) and store this value as the username
 							/>
 							<Input
 								type="text"
 								placeholder="email"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
+								// onChange is a function that fires of an event
+								// (e.target.value) the event will target the value (i.e, grab the typed email)
+								// (setEmail) and store this value as the users email
 							/>
 							<Input
 								type="text"
 								placeholder="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
+								// onChange is a function that fires of an event
+								// (e.target.value) the event will target the value (i.e, grab the typed password)
+								// (setPassword) and store this value as the users password
 							/>
 							<Button type="submit" onClick={signUp}>
 								Sign up
@@ -305,12 +310,18 @@ function App() {
 								placeholder="email"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
+								// onChange is a function that fires of an event
+								// (e.target.value) the event will target the value (i.e, grab the typed email)
+								// (setEmail) and store this value as the users email
 							/>
 							<Input
 								type="text"
 								placeholder="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
+								// onChange is a function that fires of an event
+								// (e.target.value) the event will target the value (i.e, grab the typed password)
+								// (setPassword) and store this value as the users password
 							/>
 							<Button type="submit" onClick={signIn}>
 								Sign In
@@ -349,9 +360,6 @@ function App() {
 					{/* This will use the signUp function to sign a user up  */}
 				</div>
 			)}
-			{/*  */}
-
-			{/* This is the modal button  */}
 
 			<h1>On the gram</h1>
 

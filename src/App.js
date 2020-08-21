@@ -345,25 +345,25 @@ function App() {
 				)}
 			</div>
 
-			<h1>On the gram</h1>
-
-			{posts.map(({ id, post }) => (
-				// map through posts, grab each document id, and document post
-				<Post
-					// posts each documents id and post-data (properties and values) incrementally
-					key={id}
-					// we are not displaying the id
-					// adding the id ensures that react only refreshes new posts
-					// For example: if you have 99 posts, and you add a new post,
-					// then all 100 will not get refreshed when the page reloads.
-					// Instead, react (via the virtual dom) is going to:
-					// [a] keep the old posts on the page (without refreshing them)
-					// [b] add the new post to the page
-					username={post.username}
-					caption={post.caption}
-					imageUrl={post.imageUrl}
-				/>
-			))}
+			<div className="app_posts">
+				{posts.map(({ id, post }) => (
+					// map through posts, grab each document id, and document post
+					<Post
+						// posts each documents id and post-data (properties and values) incrementally
+						key={id}
+						// we are not displaying the id
+						// adding the id ensures that react only refreshes new posts
+						// For example: if you have 99 posts, and you add a new post,
+						// then all 100 will not get refreshed when the page reloads.
+						// Instead, react (via the virtual dom) is going to:
+						// [a] keep the old posts on the page (without refreshing them)
+						// [b] add the new post to the page
+						username={post.username}
+						caption={post.caption}
+						imageUrl={post.imageUrl}
+					/>
+				))}
+			</div>
 
 			{/* In the App, there is a image upload component.
 			This allows the user to upload a new image and caption to the page.

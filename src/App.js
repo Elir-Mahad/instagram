@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Button, Input } from "@material-ui/core";
 import ImageUpload from "./ImageUpload";
-import InstagramEmbed from "react-instagram-embed";
+// import InstagramEmbed from "react-instagram-embed";
 
 // Beginning of material ui styles;
 // this is copied and pasted from https://material-ui.com/components/modal/#modal
@@ -373,7 +373,7 @@ function App() {
 						/>
 					))}
 				</div>
-				<div className="app_postsRight">
+				{/* <div className="app_postsRight">
 					<InstagramEmbed
 						url="https://instagr.am/p/Zw9o4/"
 						maxWidth={320}
@@ -386,7 +386,7 @@ function App() {
 						onAfterRender={() => {}}
 						onFailure={() => {}}
 					/>
-				</div>
+				</div> */}
 			</div>
 
 			{/* In the App, there is a image upload component.

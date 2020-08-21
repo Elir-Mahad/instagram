@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./Post.css";
 import Avatar from "@material-ui/core/Avatar";
 import { db } from "./firebase";
+import firebase from "firebase";
 
-function Post({ postId, username, caption, imageUrl }) {
+function Post({ postId, user, username, caption, imageUrl }) {
 	//! -------------- ALL USESTATES BELOW
 
 	const [comments, setComments] = useState([]);
@@ -29,6 +30,8 @@ function Post({ postId, username, caption, imageUrl }) {
 				// [c] access the post id of the post
 				.collection("comments")
 				// [d] access the comments inside the post
+				.orderBy("timestamp", "desc")
+				// order the posts based on timestamp in descending order (top post = most recent post)
 				.onSnapshot((snapshot) => {
 					setComments(snapshot.docs.map((doc) => doc.data()));
 					// [d] get a snapshot
@@ -42,6 +45,18 @@ function Post({ postId, username, caption, imageUrl }) {
 
 	const postComment = (event) => {
 		// this function will be able to submit user comment in the database to that specific post
+		event.preventDefault();
+
+		db.collection("posts")
+			.doc(postId)
+			.collection("comments")
+			.add({
+				text: comment,
+				username: user.displayName,
+				timestamp: firebase.firestore.FieldValue.serverTimestamp()
+				// this is useful for storing all code based on the correct timing
+			});
+		setComment("");
 	};
 
 	return (

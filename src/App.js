@@ -101,6 +101,7 @@ function App() {
 
 	const [user, setUser] = useState(null);
 	// this will keep track of the user
+	// CHANGE THIS TO SIGNEDINUSER
 
 	//! ----------FIRST USE EFFECT BELOW - UseEffect runs a piece of code based on a specific condition
 
@@ -362,6 +363,10 @@ function App() {
 							postId={id}
 							// (in firebase database, the postId is the number under the add document tab)
 							// each post has a specific number associated with
+							user={user}
+							// this is the user who signed in
+							// it is not limited to the user who posted an image
+							// ex: if a user who signed in to only comment, then this would be able to grab that user
 							username={post.username}
 							caption={post.caption}
 							imageUrl={post.imageUrl}

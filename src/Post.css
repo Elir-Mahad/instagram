@@ -32,6 +32,14 @@
 	margin-top: 10px;
 }
 
+.post_comments {
+	padding: 20px;
+}
+
+.post_comments strong {
+	margin-right: 5px;
+}
+
 .post_input {
 	flex: 1;
 	/* Input and button are two parts of the form.

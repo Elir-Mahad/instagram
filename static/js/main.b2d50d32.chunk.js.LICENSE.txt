@@ -1,0 +1,7 @@
+//! -------------- ALL USESTATES BELOW
+
+//! -----------------------------------------------END OF IMPORTS
+
+//! -----------SECOND USE EFFECT BELOW - UseEffect runs a piece of code based on a specific condition
+
+//! ----------FIRST USE EFFECT BELOW - UseEffect runs a piece of code based on a specific condition

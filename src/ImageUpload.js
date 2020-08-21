@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { storage, db } from "./firebase.js";
 import { firebase } from "./firebase.js";
-// import "./ImageUpload.css";
+import "./ImageUpload.css";
 
 function ImageUpload({ username }) {
 	//! -------------- ALL USESTATES BELOW
@@ -115,7 +115,7 @@ function ImageUpload({ username }) {
 	};
 
 	return (
-		<div>
+		<div className="imageupload">
 			<progress value={progress} max="100" />
 			{/* this is the progress bar */}
 

@@ -143,23 +143,26 @@ function App() {
 	useEffect(
 		() => {
 			// this is where the code runs
-			db.collection("posts").onSnapshot((snapshot) => {
+			db.collection("posts")
 				// Get the posts inside firebase
-				// Use onsnapshot
-				// Onsnapshot is a really powerful listener
-				// every single time the data base changes in that collection,
-				// every single time a document gets added, modified, changed inside a post,
-				// a camera is going to take a snapshot of exactly what that data collection looks like
-				setPosts(
-					snapshot.docs.map((doc) => ({
-						// from that snapshot, get all documents, map through every single document((snapshot.docs.map((doc))
-						id: doc.id,
-						// get the documents id  (in firebase database, the id is the number under the add document tab)
-						post: doc.data()
-						// get the document data (doc.data) --> data includes each docs properties and values (caption, username, image, etc )
-					}))
-				);
-			});
+				.orderBy("timestamp", "desc")
+				// order the posts based on timestamp in descending order (top post = most recent post)
+				.onSnapshot((snapshot) => {
+					// Use onsnapshot
+					// Onsnapshot is a really powerful listener
+					// every single time the data base changes in that collection,
+					// every single time a document gets added, modified, changed inside a post,
+					// a camera is going to take a snapshot of exactly what that data collection looks like
+					setPosts(
+						snapshot.docs.map((doc) => ({
+							// from that snapshot, get all documents, map through every single document((snapshot.docs.map((doc))
+							id: doc.id,
+							// get the documents id  (in firebase database, the id is the number under the add document tab)
+							post: doc.data()
+							// get the document data (doc.data) --> data includes each docs properties and values (caption, username, image, etc )
+						}))
+					);
+				});
 		},
 		// the below line means: whenever the page refreshs, and the conditional is satisfied,
 		// run this code only once when the app component loads, and don't run it again.

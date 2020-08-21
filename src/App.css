@@ -21,7 +21,13 @@
 }
 
 .app_posts {
+	display: flex;
+	justify-content: center;
 	padding: 20px;
+}
+
+.app_postsRight {
+	margin-left: 10px;
 }
 
 .app_signup {

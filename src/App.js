@@ -347,37 +347,42 @@ function App() {
 			</div>
 
 			<div className="app_posts">
-				{posts.map(({ id, post }) => (
-					// map through posts, grab each document id, and document post
-					<Post
-						// posts each documents id and post-data (properties and values) incrementally
-						key={id}
-						// we are not displaying the id
-						// adding the id ensures that react only refreshes new posts
-						// For example: if you have 99 posts, and you add a new post,
-						// then all 100 will not get refreshed when the page reloads.
-						// Instead, react (via the virtual dom) is going to:
-						// [a] keep the old posts on the page (without refreshing them)
-						// [b] add the new post to the page
-						username={post.username}
-						caption={post.caption}
-						imageUrl={post.imageUrl}
+				<div className="app_postsLeft">
+					{posts.map(({ id, post }) => (
+						// map through posts, grab each document id, and document post
+						<Post
+							// posts each documents id and post-data (properties and values) incrementally
+							key={id}
+							// Adding the id ensures that react only refreshes new posts
+							// For example: if you have 99 posts, and you add a new post,
+							// then all 100 will not get refreshed when the page reloads.
+							// Instead, react (via the virtual dom) is going to:
+							// [a] keep the old posts on the page (without refreshing them)
+							// [b] add the new post to the page
+							postId={id}
+							// (in firebase database, the postId is the number under the add document tab)
+							// each post has a specific number associated with
+							username={post.username}
+							caption={post.caption}
+							imageUrl={post.imageUrl}
+						/>
+					))}
+				</div>
+				<div className="app_postsRight">
+					<InstagramEmbed
+						url="https://instagr.am/p/Zw9o4/"
+						maxWidth={320}
+						hideCaption={false}
+						containerTagName="div"
+						protocol=""
+						injectScript
+						onLoading={() => {}}
+						onSuccess={() => {}}
+						onAfterRender={() => {}}
+						onFailure={() => {}}
 					/>
-				))}
+				</div>
 			</div>
-
-			<InstagramEmbed
-				url="https://instagr.am/p/Zw9o4/"
-				maxWidth={320}
-				hideCaption={false}
-				containerTagName="div"
-				protocol=""
-				injectScript
-				onLoading={() => {}}
-				onSuccess={() => {}}
-				onAfterRender={() => {}}
-				onFailure={() => {}}
-			/>
 
 			{/* In the App, there is a image upload component.
 			This allows the user to upload a new image and caption to the page.

@@ -60,7 +60,7 @@ function ImageUpload({ username }) {
 			},
 			() => {
 				// complete function
-				storage()
+				storage
 					.ref("images")
 					// go to the ref images
 					.child(image.name)
@@ -69,7 +69,7 @@ function ImageUpload({ username }) {
 					// get me the download url
 					.then((url) => {
 						// then take this url
-						db()
+						db
 							// post the image inside of the database
 							.collection("posts")
 							.add({
@@ -83,7 +83,18 @@ function ImageUpload({ username }) {
 								// [2] We used --> .getDownloadURL() ---> to get a download link
 								// [3] We are now using the download link, to post the image
 								username: username
+								// The username is inside the app.js
+								// We want to get it from the app.js and deposit it here
+								// To do that, we are going insert 'username' as a prop into the ImageUpload component
+								// like this ----> function ImageUpload({ username }) {}
+								// As a result, we will be able to receive it here.
 							});
+
+						setProgress(0);
+						setCaption("");
+						setImage(null);
+						// after your done, set everything back to how it started
+						// with no progress, no file name, no caption and no image path
 					});
 			}
 		);
@@ -91,10 +102,11 @@ function ImageUpload({ username }) {
 
 	return (
 		<div>
-			<h1>ABC</h1>
 			{/* caption input */}
 			{/* file picker */}
 			{/* post button */}
+
+			<progress value={progress} max="100" />
 
 			<input
 				type="text"

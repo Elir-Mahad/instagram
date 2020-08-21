@@ -221,13 +221,24 @@ function App() {
 
 	return (
 		<div className="app">
-			{user?.displayName ? (
-				<ImageUpload username={user.displayName} />
-			) : (
-				<h3> Login to upload</h3>
-			)}
+			{/* We only want to display the image upload component,
+			if they user is logged in. If they user is not logged in,
+			we want to tell the user to either sign up or login*/}
 
-			{/* <ImageUpload username={user.displayName} /> */}
+			{user?.displayName ? (
+				// If the username is being displayed (i.e, user is logged in)
+				// Even if the User might be undefined (we have inserted the optional (?) to deal with a potentialy undefined user)
+
+				// The optional says: if this is not there, then don't freak out and break
+				// only apply this condition once this is there
+
+				<ImageUpload username={user.displayName} /> // then display the image upload component
+			) : (
+				// OR --> if the this is not the case
+
+				<h3> Login to upload</h3>
+				// display this h3 tag
+			)}
 
 			<Modal open={openSignUp} onClose={() => setOpenSignUp(false)}>
 				{/* This is the Sign Up modal. It will popup when the signup button is clicked.

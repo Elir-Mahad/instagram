@@ -40,6 +40,10 @@ function Post({ postId, username, caption, imageUrl }) {
 		// we are using the postId variable inside the useEffect, and therefore we have to include it as a dependency below
 	}, [postId]);
 
+	const postComment = (event) => {
+		// this function will be able to submit user comment in the database to that specific post
+	};
+
 	return (
 		<div className="post">
 			<div className="post_header">
@@ -59,7 +63,7 @@ function Post({ postId, username, caption, imageUrl }) {
 				<strong>{username}</strong> {caption}
 			</h4>
 			{/* below is the comment */}
-			<form>
+			<form className="post_commentBox">
 				<input
 					className="post_input"
 					type="text"
@@ -70,6 +74,15 @@ function Post({ postId, username, caption, imageUrl }) {
 					// (e.target.value) the event will target the value (i.e, grab the typed comment)
 					// (setComment) and store this value as the comment (i.e, line before onChange function)
 				/>
+				<button
+					className="post_button"
+					disabled={!comment}
+					type="submit"
+					onClick={postComment}
+				>
+					{" "}
+					post
+				</button>
 			</form>
 		</div>
 	);

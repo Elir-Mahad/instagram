@@ -26,3 +26,31 @@
 .post_avatar {
 	margin-right: 10px;
 }
+
+.post_commentBox {
+	display: flex;
+	margin-top: 10px;
+}
+
+.post_input {
+	flex: 1;
+	/* Input and button are two parts of the form.
+		Giving input a flex of 1, and giving button a flex of 0
+		says that input should take as much space as possible
+		and the button should take as little space as possible. */
+	border: none;
+	padding: 10px;
+	border-top: 1px solid lightgray;
+}
+
+.post_button {
+	flex: 0;
+	/* Input and button are two parts of the form.
+		Giving input a flex of 1, and giving button a flex of 0
+		says that input should take as much space as possible
+		and the button should take as little space as possible. */
+	border: none;
+	color: #6082a3;
+	background-color: transparent;
+	border-top: 1px solid lightgray;
+}

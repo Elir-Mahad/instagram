@@ -220,25 +220,6 @@ function App() {
 
 	return (
 		<div className="app">
-			{/* In the App, there is a image upload component.
-			This allows the user to upload a new image and caption to the page.
-			We only want to display the image upload component,
-			if they user is logged in. If they user is not logged in,
-			we want to tell the user to either sign up or login.*/}
-
-			{user?.displayName ? (
-				// If the username is being displayed (i.e, user is logged in)
-				// Even if the User might be undefined (we have inserted the optional (?) to deal with a potentialy undefined user)
-				// The optional says: if this is not there, then don't freak out and break
-
-				<ImageUpload username={user.displayName} /> // then display the image upload component
-			) : (
-				// OR --> if the this is not the case
-
-				<h3> Login to upload</h3>
-				// display this h3 tag
-			)}
-
 			<Modal open={openSignUp} onClose={() => setOpenSignUp(false)}>
 				{/* This is the Sign Up modal. It will popup when the signup button is clicked.
 						OnClose is listening for any clicks outside of the modal.
@@ -343,26 +324,26 @@ function App() {
 					src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
 					alt=""
 				/>
+
+				{user ? (
+					// if the user is logged in then
+
+					<Button onClick={() => auth().signOut()}> Sign out </Button> // display a Sign out button - this button will use the firebase 'auth().signOut' to sign out the user.
+				) : (
+					// OR if the user is not logged in  then
+					<div className="app_loginContainer">
+						<Button onClick={() => setOpenSignIn(true)}> Sign in </Button>
+						{/* Display a sign in button */}
+						{/* When its clicked the OpenSignIn modal will popup. */}
+						{/* This modal will use the signIn function to sign a user in */}
+
+						<Button onClick={() => setOpenSignUp(true)}> Sign up </Button>
+						{/* Display a sign up button  */}
+						{/* When its clicked the OpenSignUp modal will popup. */}
+						{/* This will use the signUp function to sign a user up  */}
+					</div>
+				)}
 			</div>
-
-			{user ? (
-				// if the user is logged in then
-
-				<Button onClick={() => auth().signOut()}> Sign out </Button> // display a Sign out button - this button will use the firebase 'auth().signOut' to sign out the user.
-			) : (
-				// OR if the user is not logged in  then
-				<div className="app_loginContainer">
-					<Button onClick={() => setOpenSignIn(true)}> Sign in </Button>
-					{/* Display a sign in button */}
-					{/* When its clicked the OpenSignIn modal will popup. */}
-					{/* This modal will use the signIn function to sign a user in */}
-
-					<Button onClick={() => setOpenSignUp(true)}> Sign up </Button>
-					{/* Display a sign up button  */}
-					{/* When its clicked the OpenSignUp modal will popup. */}
-					{/* This will use the signUp function to sign a user up  */}
-				</div>
-			)}
 
 			<h1>On the gram</h1>
 
@@ -383,6 +364,25 @@ function App() {
 					imageUrl={post.imageUrl}
 				/>
 			))}
+
+			{/* In the App, there is a image upload component.
+			This allows the user to upload a new image and caption to the page.
+			We only want to display the image upload component,
+			if they user is logged in. If they user is not logged in,
+			we want to tell the user to either sign up or login.*/}
+
+			{user?.displayName ? (
+				// If the username is being displayed (i.e, user is logged in)
+				// Even if the User might be undefined (we have inserted the optional (?) to deal with a potentialy undefined user)
+				// The optional says: if this is not there, then don't freak out and break
+
+				<ImageUpload username={user.displayName} /> // then display the image upload component
+			) : (
+				// OR --> if the this is not the case
+
+				<h3> Login to upload</h3>
+				// display this h3 tag
+			)}
 		</div>
 	);
 }

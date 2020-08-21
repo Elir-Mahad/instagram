@@ -23,18 +23,18 @@ function Post({ postId, user, username, caption, imageUrl }) {
 		if (postId) {
 			// if there is a postId for the post on which the comment has occured then:
 			unsubscribe = db
-				// [a] access the database
+				// [a] enter the database
 				.collection("posts")
 				// [b] access the collection called posts
 				.doc(postId)
 				// [c] access the post id of the post
 				.collection("comments")
-				// [d] access the comments inside the post
+				// [d] access the collection called comments inside the post
 				.orderBy("timestamp", "desc")
-				// order the posts based on timestamp in descending order (top post = most recent post)
+				// [e] order the posts based on timestamp in descending order (top post = most recent post)
 				.onSnapshot((snapshot) => {
 					setComments(snapshot.docs.map((doc) => doc.data()));
-					// [d] get a snapshot
+					// [f] get a snapshot
 				});
 		}
 		return () => {
@@ -47,14 +47,22 @@ function Post({ postId, user, username, caption, imageUrl }) {
 		// this function will be able to submit user comment in the database to that specific post
 		event.preventDefault();
 
-		db.collection("posts")
+		db
+			// [a] enter the database
+			.collection("posts")
+			// [b] access the collection called posts
 			.doc(postId)
+			// [c] access the post id of the post
 			.collection("comments")
+			// [d] access the collection called comments inside the post
 			.add({
+				// add to the post
 				text: comment,
+				// the comment
 				username: user.displayName,
+				// the username
 				timestamp: firebase.firestore.FieldValue.serverTimestamp()
-				// this is useful for storing all code based on the correct timing
+				// the timestamp - this is useful for storing all code based on the correct timing
 			});
 		setComment("");
 	};
@@ -80,7 +88,7 @@ function Post({ postId, user, username, caption, imageUrl }) {
 			{/* below is the comment */}
 			<div className="post_comments">
 				{comments.map((comment) => (
-					// map/loop through each comment and di
+					// map/loop through each comment
 					<p>
 						<strong>{comment.username}</strong>
 						{/* display the username */}

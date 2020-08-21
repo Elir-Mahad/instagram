@@ -85,7 +85,7 @@ function ImageUpload({ username }) {
 							.collection("posts")
 							// post the image inside of the database collection posts
 							.add({
-								// add to the image
+								// add to the post
 								timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 								// this is useful for storing all code based on the correct timing
 								caption: caption,

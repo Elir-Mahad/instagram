@@ -29,23 +29,25 @@ function ImageUpload({ username }) {
 		if (e.target.files[0]) {
 			// get the first file that you selected
 			setImage(e.target.files[0]);
-			// set the image in state to that
+			// set (insert) that file in the image constant
 		}
 	};
 
-	//! THIS IS THE FUNCTION FOR UPLOADING IMAGE AND CAPTION TO THE FIREBASE AND THEN DISPLAYING THEM ON THE WEB PAGE
+	//! THIS IS THE FUNCTION FOR UPLOADING USER IMAGE AND CAPTION TO THE FIREBASE AND THEN DISPLAYING THEM ON THE WEB PAGE
 
 	const handleUpload = () => {
 		const uploadTask = storage.ref(`images/${image.name}`).put(image);
-		// access the storage in firebase, get a reference to this photo
-		// creating a new photo. Image name is the file name that we selected.
-		// putting the 'image' that you grabbed into 'images'
+		// The constant uploadTask stores code that uploads images into firebase
+		// [a] Access the storage in firebase.
+		// [b] Get a reference (a unique identifier) for this new photo.
+		// [c] Identify the Image name as the file name that we selected.
+		// [d] Put the 'image' that you grabbed into 'images' (insert it into the firebase document)
 
 		uploadTask.on(
 			"state_changed",
 			(snapshot) => {
-				// on state changed give me a snapshot
-				// And as it changes and gets updated keep on giving me snapshots
+				// on "state_changed" (ie, when state changes --> any change occurs) give me a snapshot
+				// And as it changes, and gets updated, give me continous snapshots
 				const progress = Math.round(
 					// The constant progress stores a math equation
 					// that could transform these continuous snapshots into a progress indicator
@@ -58,25 +60,32 @@ function ImageUpload({ username }) {
 				// display the progress number from 0 to 100
 			},
 			(error) => {
-				// error function
-				// console.log(error);
-				alert(error.message);
+				// if there is an error then console.log the error
+				console.log(error);
+				// alert(error.message);
 			},
+
 			() => {
-				// complete function
+				// if the uploadTask function is executed successfuly and there are no errors
+				// the next task is to get a 'download url' for the image that was just uploaded by the user.
+				// We an achieve this task by :
 				storage
+					// [a] Summon the storage in firebase and then enter the storage
 					.ref("images")
-					// go to the ref images
+					// [b] find the reference for the images
 					.child(image.name)
-					// go to the image named child
+					// [c] find to the image named child (i.e, the image that was just uploaded)
 					.getDownloadURL()
-					// get me the download url
+					// [d] create a download url for that image and then get that url
+
 					.then((url) => {
 						// then take this url
 						db
-							// post the image inside of the database
+							// enter the firebase database
 							.collection("posts")
+							// post the image inside of the database collection posts
 							.add({
+								// add to the image
 								timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 								// this is useful for storing all code based on the correct timing
 								caption: caption,
@@ -89,7 +98,7 @@ function ImageUpload({ username }) {
 								username: username
 								// The username is inside the app.js
 								// We want to get it from the app.js and deposit it here
-								// To do that, we are going insert 'username' as a prop into the ImageUpload component
+								// To do that, we are going insert 'username' as a prop into the ImageUpload component (top of this file)
 								// like this ----> function ImageUpload({ username }) {}
 								// As a result, we will be able to receive it here.
 							});
@@ -97,7 +106,8 @@ function ImageUpload({ username }) {
 						setProgress(0);
 						setCaption("");
 						setImage(null);
-						// after your done uploading, set everything back to how it started
+						// after your done uploading,
+						// set everything back to how it started,
 						// with no progress, no caption, and no image path
 					});
 			}

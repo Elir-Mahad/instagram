@@ -10,6 +10,7 @@ function Post({ postId, username, caption, imageUrl }) {
 	// (comments)  The constant comments contains an array
 	// (setComments) And we declare that we will mainpulate this array
 	// By wrapping the array in a UseState()
+	const [comment, setComment] = useState("");
 
 	//! --------------- USE EFFECT BELOW - for fetching comments
 
@@ -57,6 +58,19 @@ function Post({ postId, username, caption, imageUrl }) {
 			<h4 className="post_text">
 				<strong>{username}</strong> {caption}
 			</h4>
+			{/* below is the comment */}
+			<form>
+				<input
+					className="post_input"
+					type="text"
+					placeholder="Add a comment"
+					value={comment}
+					onChange={(e) => setComment(e.target.value)}
+					// onChange is a function that fires of an event
+					// (e.target.value) the event will target the value (i.e, grab the typed comment)
+					// (setComment) and store this value as the comment (i.e, line before onChange function)
+				/>
+			</form>
 		</div>
 	);
 }

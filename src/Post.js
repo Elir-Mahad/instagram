@@ -98,27 +98,29 @@ function Post({ postId, user, username, caption, imageUrl }) {
 				))}
 			</div>
 
-			<form className="post_commentBox">
-				<input
-					className="post_input"
-					type="text"
-					placeholder="Add a comment"
-					value={comment}
-					onChange={(e) => setComment(e.target.value)}
-					// onChange is a function that fires of an event
-					// (e.target.value) the event will target the value (i.e, grab the typed comment)
-					// (setComment) and store this value as the comment (i.e, line before onChange function)
-				/>
-				<button
-					className="post_button"
-					disabled={!comment}
-					type="submit"
-					onClick={postComment}
-				>
-					{" "}
-					post
-				</button>
-			</form>
+			{user && (
+				// if the user is logged in display the below comment box form
+				<form className="post_commentBox">
+					<input
+						className="post_input"
+						type="text"
+						placeholder="Add a comment"
+						value={comment}
+						onChange={(e) => setComment(e.target.value)}
+						// onChange is a function that fires of an event
+						// (e.target.value) the event will target the value (i.e, grab the typed comment)
+						// (setComment) and store this value as the comment (i.e, line before onChange function)
+					/>
+					<button
+						className="post_button"
+						disabled={!comment}
+						type="submit"
+						onClick={postComment}
+					>
+						post
+					</button>
+				</form>
+			)}
 		</div>
 	);
 }

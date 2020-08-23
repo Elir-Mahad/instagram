@@ -2,7 +2,8 @@ import firebase from "firebase";
 
 const firebaseApp = firebase.initializeApp({
 	apiKey: "AIzaSyDd8KSUe2F6AS2WXSqwKKIXLKDxKFfjtm4",
-	authDomain: "instagram-a3c9d.firebaseapp.com",
+	// authDomain: "instagram-a3c9d.firebaseapp.com",
+	authDomain: "https://elir-mahad.github.io/instagram/",
 	databaseURL: "https://instagram-a3c9d.firebaseio.com",
 	projectId: "instagram-a3c9d",
 	storageBucket: "instagram-a3c9d.appspot.com",

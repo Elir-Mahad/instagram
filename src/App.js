@@ -267,7 +267,7 @@ function App() {
 								// (setPassword) and store this value as the users password
 							/>
 							<Button type="submit" onClick={signUp}>
-								Sign up
+								Sign up now
 							</Button>
 						</center>
 					</form>
